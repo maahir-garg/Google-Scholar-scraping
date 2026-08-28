@@ -1,3 +1,4 @@
+import os
 # Import necessary libraries
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
@@ -44,8 +45,10 @@ def get_scholar_publications(author_name, journal_name, start_year, end_year, us
         "Sec-Fetch-Site": "same-origin",
         "Sec-Fetch-Mode": "navigate",
         "Sec-Fetch-Dest": "document",
-        "Cookie": 'GOOGLE_ABUSE_EXEMPTION=ID=f83fb44e56358633:TM=1709558664:C=r:IP=137.132.26.113-:S=oaedhAhrWESENrjog7sNhXo; GSP=A=ydeQ-A:CPTS=1709558665:LM=1709558665:S=yLS9ikJhdz_Q8Hb0; NID=512=L_FiR8ux3YdD2cwqCYJj9aXfvhgtDow0XfuG48mZ0Rv5E2JQGbpDDPOZo_eqK8cTdopGyhcQwZqrALw0rASHQrzzFYa9QaO2IPUJJQp0KGODBN889Zg8V5MwcEfPGWCoXRw68OPYf5owMZ0iolaq1GaA5Dp07-oRIq8CPkJ4oWM'}
-
+    }
+    cookie = os.getenv("GOOGLE_SCHOLAR_COOKIE")
+    if cookie:
+        headers["Cookie"] = cookie
     # Error handling for HTTP requests.
     try:
         req = urllib.request.Request(link, headers=headers)
