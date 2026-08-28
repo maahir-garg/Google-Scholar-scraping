@@ -1,3 +1,4 @@
+import os
 # Import necessary libraries
 import random
 import time
@@ -30,7 +31,10 @@ def get_links(paper, one_author):
         "Sec-Fetch-Site": "same-origin",
         "Sec-Fetch-Mode": "navigate",
         "Sec-Fetch-Dest": "document",
-        "Cookie": 'REDACTED'}
+    }
+    cookie = os.getenv("GOOGLE_SCHOLAR_COOKIE")
+    if cookie:
+        headers["Cookie"] = cookie
     # Make the request to Google Scholar with prepared URL and headers
     req = urllib.request.Request(url, headers=headers)
     response = urllib.request.urlopen(req)
@@ -98,7 +102,10 @@ def citations_per_paper(links, year_given):
             "Sec-Fetch-Site": "same-origin",
             "Sec-Fetch-Mode": "navigate",
             "Sec-Fetch-Dest": "document",
-            "Cookie": 'REDACTED'}
+        }
+        cookie = os.getenv("GOOGLE_SCHOLAR_COOKIE")
+        if cookie:
+            headers["Cookie"] = cookie
         # Make the request to Google Scholar with prepared URL and headers
         req = urllib.request.Request(link, headers=headers)
         response = urllib.request.urlopen(req)
