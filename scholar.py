@@ -1,3 +1,4 @@
+import os
 # Import necessary libraries
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
@@ -44,8 +45,10 @@ def get_scholar_publications(author_name, journal_name, start_year, end_year, us
         "Sec-Fetch-Site": "same-origin",
         "Sec-Fetch-Mode": "navigate",
         "Sec-Fetch-Dest": "document",
-        "Cookie": 'REDACTED'}
-
+    }
+    cookie = os.getenv("GOOGLE_SCHOLAR_COOKIE")
+    if cookie:
+        headers["Cookie"] = cookie
     # Error handling for HTTP requests.
     try:
         req = urllib.request.Request(link, headers=headers)
