@@ -1,3 +1,4 @@
+import os
 # Import necessary libraries
 import random
 import time
@@ -30,7 +31,10 @@ def get_links(paper, one_author):
         "Sec-Fetch-Site": "same-origin",
         "Sec-Fetch-Mode": "navigate",
         "Sec-Fetch-Dest": "document",
-        "Cookie": 'HSID=AkNAfDCKqby6jxwQk; SSID=Aw51YDA9-Twe3BLYx; APISID=oQusBC-K2jl6jSBE/Amx8xugafMnsj2rbX; SAPISID=H797tIbLSNP1rqvF/AtZLdWJiLozLARYhJ; __Secure-1PAPISID=H797tIbLSNP1rqvF/AtZLdWJiLozLARYhJ; __Secure-3PAPISID=H797tIbLSNP1rqvF/AtZLdWJiLozLARYhJ; SEARCH_SAMESITE=CgQI9pkB; SID=eQi6ZDzyHwrDjeAHCJTUeSz2K4fLjHcrTF_k7GxXcteRS-gj4CHP5fQLUlCs4LnVTyrnWQ.; __Secure-1PSID=eQi6ZDzyHwrDjeAHCJTUeSz2K4fLjHcrTF_k7GxXcteRS-gjVnmPYoum8qZXxjTk-z_ckA.; __Secure-3PSID=eQi6ZDzyHwrDjeAHCJTUeSz2K4fLjHcrTF_k7GxXcteRS-gjBAthUQ4D-0rOrcJBZLrFMg.; __Secure-ENID=17.SE=IEMePplNIwKUco7gJiZfaJ1FbVdtPYdZQoBEAsFwzk6G2G-dOAMbiunZPQ6nWeio8OHG3KNfcT08t-fEfrjw2DCuWVx8lFXc6oPPbNU7-80WTD6s1t5GbkgPyU57g4baQHayQJBj3YN6TIKTiGQT74b2-7Q52LpwW3Ya18Qy8i7JCIN64_DCv5bPSp-h3p_sOF9BdTG7C3Ndx4Ll8r66eTdp1CIJIQ6Mv-2pY7WdTmwg5zlYwPyhL-3F2G28OSsG9ti-97FX30XdwU6jrZrYJ2J9fmkZ-UXnJF_9QWwpJruyEDc; AEC=Ae3NU9MRX8034wXd0if7d36ly9EdM0iBaeoQ-Z_lnrEJPdBIPQPaYQEqzA; 1P_JAR=2024-01-12-18; NID=511=BJ2zma1dux3O_neHnzUeScU5NS-5SYC679yAc9AFQqogqRZTwjfR9FFyBzIjJ1tFiFUsHSDj21XWlAffaB9UAjwVPLHbYuu7iWyvHhmFAAzwxiKXIjDiRBKhdkE_ZkPaennkA88RYZA0LqMqUIdJ8tm93RePj2o9BbMX0zsZ3yhixiXihWB54z8R1FKzNLhzjKxWc7W2EIja_2TMkgexx7hw9PJw5vzsrIp5Xy0z0p2LR1wjiA6rkop-hwCpipYaC4GHhNxDQPfT8Rg5B5iZwrop7S9MpHOCtoPg8pmnMroYia0cpWvlFPG_RwjjBeLc8qr_3LXFWdc1rJa4M1a4aDp0mXWMkIYx-VpIw2loGRCnpoUaUkoxDUWGn3HF493NgGn2G0TN_s1OKcFfrG4sQS4A4kWRPP-eXh3PIAARcVnfXnA1Ss7mYd7tYbvXqt0o2Q4aH5D0Eas2zNO4MxNXoP9FmZk; __Secure-1PSIDTS=sidts-CjIBPVxjSmIZ2ESPjhqot9kLNToGjMrLOezcFJjgxBzdm9X6VGJfc0kUeXNXkYIZ0MfzVBAA; __Secure-3PSIDTS=sidts-CjIBPVxjSmIZ2ESPjhqot9kLNToGjMrLOezcFJjgxBzdm9X6VGJfc0kUeXNXkYIZ0MfzVBAA; GOOGLE_ABUSE_EXEMPTION=ID=7194cdd92d2b3c23:TM=1705082845:C=r:IP=103.57.173.114-:S=eK2Z5mnGm4STOhG2OCoWrfI; GSP=A=qJMxIg:CPTS=1705082863:HG=:LM=1705082863:S=QYqLjklPwuY9-HnX; SIDCC=ABTWhQHDszxVC8PEkFk7k2fmexXbmYRN_0W7cb5dRguUm35oHr9X-9HJDjifh6ma7SK2uDVbzaiP; __Secure-1PSIDCC=ABTWhQG7mCpjB4Mmrf2VqlBHfe5Twf7pg_U1WDx8IuZytcVrMbP-oPkhjiGykxKz0wpuH0MAeJA; __Secure-3PSIDCC=ABTWhQF94I8sfgbIU7oGSkTcOYAObv9a3XO14_pAcSkJthR9o6OeE2MkRH4jZsuyykG9MhZLp8s'}
+    }
+    cookie = os.getenv("GOOGLE_SCHOLAR_COOKIE")
+    if cookie:
+        headers["Cookie"] = cookie
     # Make the request to Google Scholar with prepared URL and headers
     req = urllib.request.Request(url, headers=headers)
     response = urllib.request.urlopen(req)
@@ -98,7 +102,10 @@ def citations_per_paper(links, year_given):
             "Sec-Fetch-Site": "same-origin",
             "Sec-Fetch-Mode": "navigate",
             "Sec-Fetch-Dest": "document",
-            "Cookie": 'HSID=AkNAfDCKqby6jxwQk; SSID=Aw51YDA9-Twe3BLYx; APISID=oQusBC-K2jl6jSBE/Amx8xugafMnsj2rbX; SAPISID=H797tIbLSNP1rqvF/AtZLdWJiLozLARYhJ; __Secure-1PAPISID=H797tIbLSNP1rqvF/AtZLdWJiLozLARYhJ; __Secure-3PAPISID=H797tIbLSNP1rqvF/AtZLdWJiLozLARYhJ; SEARCH_SAMESITE=CgQI9pkB; SID=eQi6ZDzyHwrDjeAHCJTUeSz2K4fLjHcrTF_k7GxXcteRS-gj4CHP5fQLUlCs4LnVTyrnWQ.; __Secure-1PSID=eQi6ZDzyHwrDjeAHCJTUeSz2K4fLjHcrTF_k7GxXcteRS-gjVnmPYoum8qZXxjTk-z_ckA.; __Secure-3PSID=eQi6ZDzyHwrDjeAHCJTUeSz2K4fLjHcrTF_k7GxXcteRS-gjBAthUQ4D-0rOrcJBZLrFMg.; __Secure-ENID=17.SE=IEMePplNIwKUco7gJiZfaJ1FbVdtPYdZQoBEAsFwzk6G2G-dOAMbiunZPQ6nWeio8OHG3KNfcT08t-fEfrjw2DCuWVx8lFXc6oPPbNU7-80WTD6s1t5GbkgPyU57g4baQHayQJBj3YN6TIKTiGQT74b2-7Q52LpwW3Ya18Qy8i7JCIN64_DCv5bPSp-h3p_sOF9BdTG7C3Ndx4Ll8r66eTdp1CIJIQ6Mv-2pY7WdTmwg5zlYwPyhL-3F2G28OSsG9ti-97FX30XdwU6jrZrYJ2J9fmkZ-UXnJF_9QWwpJruyEDc; AEC=Ae3NU9MRX8034wXd0if7d36ly9EdM0iBaeoQ-Z_lnrEJPdBIPQPaYQEqzA; 1P_JAR=2024-01-12-18; NID=511=BJ2zma1dux3O_neHnzUeScU5NS-5SYC679yAc9AFQqogqRZTwjfR9FFyBzIjJ1tFiFUsHSDj21XWlAffaB9UAjwVPLHbYuu7iWyvHhmFAAzwxiKXIjDiRBKhdkE_ZkPaennkA88RYZA0LqMqUIdJ8tm93RePj2o9BbMX0zsZ3yhixiXihWB54z8R1FKzNLhzjKxWc7W2EIja_2TMkgexx7hw9PJw5vzsrIp5Xy0z0p2LR1wjiA6rkop-hwCpipYaC4GHhNxDQPfT8Rg5B5iZwrop7S9MpHOCtoPg8pmnMroYia0cpWvlFPG_RwjjBeLc8qr_3LXFWdc1rJa4M1a4aDp0mXWMkIYx-VpIw2loGRCnpoUaUkoxDUWGn3HF493NgGn2G0TN_s1OKcFfrG4sQS4A4kWRPP-eXh3PIAARcVnfXnA1Ss7mYd7tYbvXqt0o2Q4aH5D0Eas2zNO4MxNXoP9FmZk; __Secure-1PSIDTS=sidts-CjIBPVxjSmIZ2ESPjhqot9kLNToGjMrLOezcFJjgxBzdm9X6VGJfc0kUeXNXkYIZ0MfzVBAA; __Secure-3PSIDTS=sidts-CjIBPVxjSmIZ2ESPjhqot9kLNToGjMrLOezcFJjgxBzdm9X6VGJfc0kUeXNXkYIZ0MfzVBAA; GOOGLE_ABUSE_EXEMPTION=ID=7194cdd92d2b3c23:TM=1705082845:C=r:IP=103.57.173.114-:S=eK2Z5mnGm4STOhG2OCoWrfI; GSP=A=qJMxIg:CPTS=1705082863:HG=:LM=1705082863:S=QYqLjklPwuY9-HnX; SIDCC=ABTWhQHDszxVC8PEkFk7k2fmexXbmYRN_0W7cb5dRguUm35oHr9X-9HJDjifh6ma7SK2uDVbzaiP; __Secure-1PSIDCC=ABTWhQG7mCpjB4Mmrf2VqlBHfe5Twf7pg_U1WDx8IuZytcVrMbP-oPkhjiGykxKz0wpuH0MAeJA; __Secure-3PSIDCC=ABTWhQF94I8sfgbIU7oGSkTcOYAObv9a3XO14_pAcSkJthR9o6OeE2MkRH4jZsuyykG9MhZLp8s'}
+        }
+        cookie = os.getenv("GOOGLE_SCHOLAR_COOKIE")
+        if cookie:
+            headers["Cookie"] = cookie
         # Make the request to Google Scholar with prepared URL and headers
         req = urllib.request.Request(link, headers=headers)
         response = urllib.request.urlopen(req)
